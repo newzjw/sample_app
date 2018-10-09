@@ -21,3 +21,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# Ignore Spring files. 把spring加入到这个文件
+/spring/*.pid
