@@ -2,10 +2,13 @@
 <html>
   <head>
     <!--通过 Ruby 的 yield 函数把标题插入模板中-->
-    <title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</title>
+    <title><%= full_title(yield(:title)) %></title>
     <!--避免跨站请求伪造-->
     <%= csrf_meta_tags %>
 
+    <!--使用了rails内置的方法，在所有媒介类型中引入application.css,这里省略了括号-->
+    <!--哈希是最后一个参数，可以省略花括号,media和data-turbolinks-track是哈希的键-->
+    <!--调用stylesheet_link_tag函数，传入两个参数，参数1为字符串，指明样式表的路径，参数2是哈希，包含两个元素，第一个表示媒介类型，第二个启用 Rails 4.0 增加的 Turbolink 功能-->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
