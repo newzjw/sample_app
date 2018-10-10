@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'users/new'
+  resources :users     #注意这里要加s，resources
+  #get 'users/new'
 
   root 'static_pages#home'
   #root to: 'static_pages#home'
