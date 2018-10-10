@@ -11,9 +11,15 @@
     <!--调用stylesheet_link_tag函数，传入两个参数，参数1为字符串，指明样式表的路径，参数2是哈希，包含两个元素，第一个表示媒介类型，第二个启用 Rails 4.0 增加的 Turbolink 功能-->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/shim' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <div class="container">
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+    </div>
+
   </body>
 </html>
