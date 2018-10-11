@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   resources :users     #注意这里要加s，resources
+  resources :sessions, only: [:new, :create, :destroy]
+  match '/signup', to: 'users#new', via: 'get'
+  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
   #get 'users/new'
 
   root 'static_pages#home'
