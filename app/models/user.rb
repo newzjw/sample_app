@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-
+  has_many :microposts, dependent: :destroy #保证在删除某个用户的情况下，该用户的所有微博同步删除
   before_save { self.email = email.downcase }  #在存入数据库前，把email变成小写，再判断唯一性
   before_create :create_remember_token #在创建用户时设置记忆权标
 
@@ -15,6 +15,11 @@ class User < ApplicationRecord
   end
   def User.encrypt(token)  #给传入的token值加密
     Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  def feed
+    # This is preliminary. See "Following users" for the full implementation.
+    Micropost.where("user_id = ?", id)
   end
 
   private #私有方法，只在这个控制器中使用

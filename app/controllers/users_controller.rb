@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page]) #用户微博
   end
 
   def new
@@ -57,15 +58,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
     end
-    # Before filters
-    def signed_in_user #如果没有登录，跳转到登录页面
-      unless signed_in?#等同于下面那行代码
-        store_location #调用了store_location方法，把所请求页面的完整地址赋值给session[:return_to]
-        flash[:notice] = "Please sign in."
-        redirect_to signin_url
-      end
-      #redirect_to signin_url, notice: "Please sign in." unless signed_in?
-    end
+
 
     def correct_user #判断是否是当前登录用户
       @user = User.find(params[:id]) #根据参数中的id获取user信息

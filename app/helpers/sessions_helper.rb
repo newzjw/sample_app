@@ -28,6 +28,17 @@ module SessionsHelper
     user == current_user
   end
 
+  #本来是放在usercontroller,因为只有这里用到，可是现在micropost也要用，就把它移动到这
+  # Before filters
+  def signed_in_user #如果没有登录，跳转到登录页面
+    unless signed_in?#等同于下面那行代码
+      store_location #调用了store_location方法，把所请求页面的完整地址赋值给session[:return_to]
+      flash[:notice] = "Please sign in."
+      redirect_to signin_url
+    end
+    #redirect_to signin_url, notice: "Please sign in." unless signed_in?
+  end
+
   def sign_out  #退出登录，销毁cookies中的remember_token
     self.current_user = nil
     cookies.delete(:remember_token) #调用cookies的delete方法，删除记忆标权
