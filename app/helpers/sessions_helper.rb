@@ -24,8 +24,22 @@ module SessionsHelper
     @current_user ||= User.find_by(remember_token: remember_token)
   end
 
+  def current_user?(user)  #判断user是否是当前登录用户
+    user == current_user
+  end
+
   def sign_out  #退出登录，销毁cookies中的remember_token
     self.current_user = nil
     cookies.delete(:remember_token) #调用cookies的delete方法，删除记忆标权
+  end
+
+
+  def redirect_back_or(default) #如果存储了之前的地址，则转向这个地址，否则转向参数中指定的地址
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+  def store_location
+    #request.fullpath获取所请求页面的完整地址
+    session[:return_to] = request.fullpath
   end
 end

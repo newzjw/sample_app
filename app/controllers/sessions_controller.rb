@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # Sign the user in and redirect to the user's show page.
       sign_in user #调用登录方法
-      redirect_to user
+      redirect_back_or user
     else
       # Create an error message and re-render the signin form.
       #这里应该要用now方法，不然这个错误信息会停留比较久，点另一个页面的时候还在
