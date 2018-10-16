@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :users     #注意这里要加s，resources
+  resources :users do #注意这里要加s，resources
+    member do      #member的作用，设置这两个动作对应的url地址中应该包含用户的id，要是用collection方法，url里就没有id
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
